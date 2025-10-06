@@ -1,0 +1,11 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "env": {
+    "CALENDLY_WEBHOOK_SECRET": "your_webhook_secret_here",
+    "ADMIN_PASSWORD": "admin123",
+    "DASHBOARD_API_KEY": "QjLA4c46CL879xQ5WhUrgli3e2ZphQVA",
+    "VALUE_PER_BOOKING": "100",
+    "NODE_ENV": "production"
+  }
+}

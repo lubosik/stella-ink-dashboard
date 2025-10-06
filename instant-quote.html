@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMP Price Calculator (Canada) — Instant Quote | Stella's Ink Chamber</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;500;600;700&family=Libre+Baskerville:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles/calculator.css">
+</head>
+<body>
+  <div class="instant-quote">
+    <div class="instant-quote__content">
+      <!-- Progress Bar -->
+      <div class="progress-bar" id="progressBar">
+        <div class="progress-bar__header">
+          <span class="progress-bar__step" id="progressText">Step 1 of 7</span>
+          <span class="progress-bar__label" id="progressLabel">About You</span>
+        </div>
+        <div class="progress-bar__track">
+          <div class="progress-bar__fill" id="progressFill" style="width: 14.3%"></div>
+        </div>
+      </div>
+
+      <!-- Step Container -->
+      <div id="stepContainer"></div>
+
+      <!-- Error Display -->
+      <div id="errorDisplay" class="instant-quote__error" style="display: none;"></div>
+    </div>
+
+    <!-- Sticky CTA -->
+    <div class="sticky-cta" id="stickyCTA">
+      <div class="sticky-cta__container">
+        <button type="button" class="btn btn--secondary" id="backBtn" disabled>Back</button>
+        <button type="button" class="btn btn--primary" id="nextBtn" disabled>
+          <span id="nextBtnText">Next: Your Hair Situation</span>
+          <span class="btn__spinner" id="btnSpinner" style="display: none;"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="lib/pricing-calc.js"></script>
+  <script>
+    const state = {
+      currentStep: 1,
+      answers: {},
+      estimate: null
+    };
+
+    const STEP_LABELS = [
+      'About You',
+      'Hair Situation',
+      'Coverage Area',
+      'Finish Preference',
+      'Timing',
+      'Add-ons',
+      'Contact Info'
+    ];
+
+    function renderStep1() {
+      return '<div class="calculator-step">' +
+        '<h2 class="step__title">Let' + String.fromCharCode(39) + 's start with a few basics</h2>' +
+        '<p class="step__subtitle">This helps us provide the most accurate estimate for you.</p>' +
+        '<div class="step__section">' +
+        '<h3 class="step__section-title">Gender</h3>' +
+        '<div class="step__options step__options--grid-2">' +
+        renderOptionCard('gender', 'male', 'Male') +
+        renderOptionCard('gender', 'female', 'Female') +
+        renderOptionCard('gender', 'non-binary', 'Non-binary') +
+        renderOptionCard('gender', 'prefer-not-to-say', 'Prefer not to say') +
+        '</div></div>' +
+        '<div class="step__section">' +
+        '<h3 class="step__section-title">Age Range</h3>' +
+        '<div class="step__options step__options--grid-2">' +
+        renderOptionCard('age_band', 'under-25', 'Under 25') +
+        renderOptionCard('age_band', '25-34', '25-34') +
+        renderOptionCard('age_band', '35-44', '35-44') +
+        renderOptionCard('age_band', '45-54', '45-54') +
+        renderOptionCard('age_band', '55-plus', '55+') +
+        '</div></div></div>';
+    }
+
+    function renderStep2() {
+      return '<div class="calculator-step">' +
+        '<h2 class="step__title">What' + String.fromCharCode(39) + 's your main hair concern?</h2>' +
+        '<p class="step__subtitle">This helps us understand what you' + String.fromCharCode(39) + 're looking to achieve.</p>' +
+        '<div class="step__section"><div class="step__options">' +
+        renderOptionCard('concern', 'receding', 'Receding hairline', 'Temples or front hairline moving back') +
+        renderOptionCard('concern', 'thinning', 'Thinning/Diffuse', 'Overall density loss across scalp') +
+        renderOptionCard('concern', 'alopecia', 'Alopecia', 'Patchy or complete hair loss') +
+        renderOptionCard('concern', 'scars', 'Scar camouflage', 'Cover surgical or injury scars') +
+        renderOptionCard('concern', 'full-shave', 'Full shaved look', 'Buzzed/bald aesthetic') +
+        renderOptionCard('concern', 'not-sure', 'Not sure', 'Need guidance on what' + String.fromCharCode(39) + 's best') +
+        '</div></div></div>';
+    }
+
+    function renderStep3() {
+      return '<div class="calculator-step">' +
+        '<h2 class="step__title">Which area needs coverage?</h2>' +
+        '<p class="step__subtitle">Select the area that best matches your needs.</p>' +
+        '<div class="step__section"><div class="step__options">' +
+        renderOptionCard('coverage_area', 'hairline_temples', 'Hairline/Temples only', 'Front hairline and temple areas') +
+        renderOptionCard('coverage_area', 'crown', 'Crown area', 'Top/back of head') +
+        renderOptionCard('coverage_area', 'full_top', 'Full top of head', 'Hairline through crown') +
+        renderOptionCard('coverage_area', 'patchy_areas', 'Patchy areas', 'Multiple small areas') +
+        renderOptionCard('coverage_area', 'scars_only', 'Scars only', 'Scar camouflage work') +
+        renderOptionCard('coverage_area', 'full_scalp', 'Full scalp', 'Complete head coverage') +
+        '</div></div></div>';
+    }
+
+    function renderStep4() {
+      return '<div class="calculator-step">' +
+        '<h2 class="step__title">What finish do you prefer?</h2>' +
+        '<p class="step__subtitle">This affects the style and technique we' + String.fromCharCode(39) + 'll use.</p>' +
+        '<div class="step__options">' +
+        renderOptionCard('finish', 'natural', 'Natural soft hairline', 'Subtle, organic appearance') +
+        renderOptionCard('finish', 'barbershop_crisp', 'Defined crisp look', 'Sharp, clean edges') +
+        renderOptionCard('finish', 'density_only', 'Density enhancement only', 'Fill in existing hair') +
+        renderOptionCard('finish', 'need_guidance', 'Need guidance', 'Not sure what' + String.fromCharCode(39) + 's best for me') +
+        '</div></div>';
+    }
+
+    function renderStep5() {
+      return '<div class="calculator-step">' +
+        '<h2 class="step__title">When are you looking to start?</h2>' +
+        '<p class="step__subtitle">This helps us plan your consultation timeline.</p>' +
+        '<div class="step__options">' +
+        renderOptionCard('timing', 'asap', 'As soon as possible', 'Ready to book within days') +
+        renderOptionCard('timing', '2-4-weeks', 'Within 2-4 weeks', 'Planning ahead') +
+        renderOptionCard('timing', '1-3-months', '1-3 months', 'Researching and comparing') +
+        renderOptionCard('timing', 'researching', 'Just researching', 'Gathering information') +
+        '</div></div>';
+    }
+
+    function renderStep6() {
+      return '<div class="calculator-step">' +
+        '<h2 class="step__title">Any additional services?</h2>' +
+        '<p class="step__subtitle">These are optional add-ons (select all that apply).</p>' +
+        '<div class="step__options">' +
+        renderOptionCard('scar_addon', true, 'Scar camouflage work', 'Additional scar coverage beyond main area', 'checkbox') +
+        renderOptionCard('womens_density_addon', true, 'Women' + String.fromCharCode(39) + 's density focus', 'Enhanced density work for women', 'checkbox') +
+        renderOptionCard('skip_addons', true, 'No add-ons needed', 'Continue without extras', 'checkbox') +
+        '</div></div>';
+    }
+
+    function renderStep7() {
+      var nameVal = state.answers.name || '';
+      var emailVal = state.answers.email || '';
+      var phoneVal = state.answers.phone || '';
+      var consentChecked = state.answers.consent ? 'checked' : '';
+      
+      return '<div class="calculator-step">' +
+        '<h2 class="step__title">Where should we send your estimate?</h2>' +
+        '<p class="step__subtitle">We' + String.fromCharCode(39) + 'll email you a detailed breakdown plus a $100 consultation gift card.</p>' +
+        '<form class="step__form" id="contactForm" onsubmit="return false;">' +
+        '<div class="form-group">' +
+        '<label class="form-label" for="name">Full Name <span class="required">*</span></label>' +
+        '<input type="text" id="name" class="form-input" placeholder="John Smith" value="' + nameVal + '" required />' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label class="form-label" for="email">Email <span class="required">*</span></label>' +
+        '<input type="email" id="email" class="form-input" placeholder="john@example.com" value="' + emailVal + '" required />' +
+        '</div>' +
+        '<div class="form-group">' +
+        '<label class="form-label" for="phone">Phone <span class="required">*</span></label>' +
+        '<input type="tel" id="phone" class="form-input" placeholder="(555) 123-4567" value="' + phoneVal + '" required />' +
+        '<span class="form-help form-help--small">We' + String.fromCharCode(39) + 'll only use this to schedule your free consultation.</span>' +
+        '</div>' +
+        '<div class="form-group form-group--checkbox">' +
+        '<label class="checkbox-label">' +
+        '<input type="checkbox" id="consent" class="checkbox-input" ' + consentChecked + ' required />' +
+        '<span class="checkbox-text">I consent to receive my estimate and consultation details via email and SMS. I can unsubscribe anytime. <span class="required">*</span></span>' +
+        '</label></div></form>' +
+        '<div class="step__gift-card-banner">' +
+        '<div class="gift-card-icon">🎁</div>' +
+        '<div class="gift-card-content">' +
+        '<h4 class="gift-card-title">$100 Consultation Gift Card</h4>' +
+        '<p class="gift-card-text">Book a free consultation within 30 days and receive $100 off your SMP treatment.</p>' +
+        '</div></div></div>';
+    }
+
+    function renderResults() {
+      if (!state.estimate) return '';
+
+      var low = state.estimate.low;
+      var high = state.estimate.high;
+      var mid = state.estimate.mid;
+      var currency = state.estimate.currency;
+      var sessions = state.estimate.sessions;
+      var factors = state.estimate.factors;
+      var disclaimer = state.estimate.disclaimer;
+
+      var factorsList = '';
+      for (var i = 0; i < factors.length; i++) {
+        factorsList += '<li class="factors__item">' + factors[i] + '</li>';
+      }
+
+      return '<div class="result-panel">' +
+        '<div class="result-panel__success-icon">' +
+        '<svg width="64" height="64" viewBox="0 0 64 64" fill="#10b981">' +
+        '<circle cx="32" cy="32" r="32" fill="#d1fae5"/>' +
+        '<path d="M44.8 22.4L28 39.2l-8.8-8.8-3.2 3.2L28 45.6l20-20z" fill="#10b981"/>' +
+        '</svg></div>' +
+        '<h2 class="result-panel__title">Your Personalized Estimate</h2>' +
+        '<p class="result-panel__subtitle">Based on your selections, here' + String.fromCharCode(39) + 's your estimated investment range.</p>' +
+        '<div class="result-panel__estimate-card">' +
+        '<div class="estimate-card__range">' +
+        '<span class="estimate-card__currency">' + currency + '</span>' +
+        '<span class="estimate-card__low">' + low.toLocaleString() + '</span>' +
+        '<span class="estimate-card__separator">-</span>' +
+        '<span class="estimate-card__high">' + high.toLocaleString() + '</span>' +
+        '</div>' +
+        '<div class="estimate-card__mid">Most likely: ' + currency + ' ' + mid.toLocaleString() + '</div>' +
+        '<div class="estimate-card__sessions">' + sessions.description + '</div>' +
+        '</div>' +
+        '<div class="result-panel__factors">' +
+        '<h3 class="factors__title">Your estimate includes:</h3>' +
+        '<ul class="factors__list">' + factorsList + '</ul>' +
+        '</div>' +
+        '<div class="result-panel__gift-card">' +
+        '<div class="gift-card-icon">🎁</div>' +
+        '<div class="gift-card-content">' +
+        '<h4 class="gift-card-title">$100 Gift Card Reserved!</h4>' +
+        '<p class="gift-card-text">We' + String.fromCharCode(39) + 've sent your detailed estimate and $100 consultation gift card to your email. Book within 30 days to redeem.</p>' +
+        '</div></div>' +
+        '<div class="result-panel__cta">' +
+        '<a href="#book" class="btn btn--primary btn--large">Book Free Consultation</a>' +
+        '<p class="cta__subtext">Or call us at (555) 123-4567</p>' +
+        '</div>' +
+        '<div class="result-panel__disclaimer"><p>' + disclaimer + '</p></div>' +
+        '<div class="result-panel__next-steps">' +
+        '<h3 class="next-steps__title">What happens next?</h3>' +
+        '<ol class="next-steps__list">' +
+        '<li>Check your email for your full estimate breakdown</li>' +
+        '<li>Book your free, no-pressure consultation</li>' +
+        '<li>We' + String.fromCharCode(39) + 'll assess your scalp and finalize your custom treatment plan</li>' +
+        '<li>Schedule your first session at a time that works for you</li>' +
+        '</ol></div></div>';
+    }
+
+    function renderOptionCard(field, value, label, description, type) {
+      description = description || '';
+      type = type || 'radio';
+      
+      var isSelected = type === 'checkbox' 
+        ? state.answers[field] === true
+        : state.answers[field] === value;
+      
+      var selectedClass = isSelected ? ' selected' : '';
+      var checkmark = isSelected ? '<svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor"><path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/></svg>' : '';
+      var descHtml = description ? '<div class="option-card__description">' + description + '</div>' : '';
+
+      return '<button type="button" class="option-card' + selectedClass + '" ' +
+        'onclick="selectOption(' + String.fromCharCode(39) + field + String.fromCharCode(39) + ', ' + String.fromCharCode(39) + value + String.fromCharCode(39) + ', ' + String.fromCharCode(39) + type + String.fromCharCode(39) + ')" ' +
+        'aria-pressed="' + isSelected + '">' +
+        '<div class="option-card__content">' +
+        '<div class="option-card__label">' + label + '</div>' +
+        descHtml +
+        '</div>' +
+        '<div class="option-card__checkmark" aria-hidden="true">' + checkmark + '</div>' +
+        '</button>';
+    }
+
+    function selectOption(field, value, type) {
+      if (type === 'checkbox') {
+        if (field === 'skip_addons') {
+          state.answers.scar_addon = false;
+          state.answers.womens_density_addon = false;
+        } else {
+          state.answers.skip_addons = false;
+          state.answers[field] = !state.answers[field];
+        }
+      } else {
+        state.answers[field] = value;
+      }
+      render();
+      updateNextButton();
+    }
+
+    function updateNextButton() {
+      var nextBtn = document.getElementById('nextBtn');
+      var nextBtnText = document.getElementById('nextBtnText');
+      
+      var canProceed = false;
+
+      switch (state.currentStep) {
+        case 1:
+          canProceed = state.answers.gender && state.answers.age_band;
+          nextBtnText.textContent = 'Next: Your Hair Situation';
+          break;
+        case 2:
+          canProceed = !!state.answers.concern;
+          nextBtnText.textContent = 'Next: Coverage Area';
+          break;
+        case 3:
+          canProceed = !!state.answers.coverage_area;
+          nextBtnText.textContent = 'Next: Finish Preference';
+          break;
+        case 4:
+          canProceed = !!state.answers.finish;
+          nextBtnText.textContent = 'Next: Timing';
+          break;
+        case 5:
+          canProceed = !!state.answers.timing;
+          nextBtnText.textContent = 'Next: Add-ons';
+          break;
+        case 6:
+          canProceed = true;
+          nextBtnText.textContent = 'Next: Contact Info';
+          break;
+        case 7:
+          var form = document.getElementById('contactForm');
+          canProceed = form && form.checkValidity();
+          nextBtnText.textContent = 'See My Estimate';
+          break;
+      }
+
+      nextBtn.disabled = !canProceed;
+    }
+
+    function updateProgress() {
+      var progressText = document.getElementById('progressText');
+      var progressLabel = document.getElementById('progressLabel');
+      var progressFill = document.getElementById('progressFill');
+
+      if (state.currentStep <= 7) {
+        progressText.textContent = 'Step ' + state.currentStep + ' of 7';
+        progressLabel.textContent = STEP_LABELS[state.currentStep - 1];
+        var percentage = (state.currentStep / 7) * 100;
+        progressFill.style.width = percentage + '%';
+      }
+    }
+
+    function render() {
+      var container = document.getElementById('stepContainer');
+      var progressBar = document.getElementById('progressBar');
+      var stickyCTA = document.getElementById('stickyCTA');
+
+      if (state.currentStep === 8) {
+        progressBar.style.display = 'none';
+        stickyCTA.style.display = 'none';
+        container.innerHTML = renderResults();
+      } else {
+        progressBar.style.display = 'block';
+        stickyCTA.style.display = 'block';
+
+        switch (state.currentStep) {
+          case 1: container.innerHTML = renderStep1(); break;
+          case 2: container.innerHTML = renderStep2(); break;
+          case 3: container.innerHTML = renderStep3(); break;
+          case 4: container.innerHTML = renderStep4(); break;
+          case 5: container.innerHTML = renderStep5(); break;
+          case 6: container.innerHTML = renderStep6(); break;
+          case 7: container.innerHTML = renderStep7(); attachFormListeners(); break;
+        }
+      }
+
+      updateProgress();
+      updateNextButton();
+      updateBackButton();
+    }
+
+    function attachFormListeners() {
+      var form = document.getElementById('contactForm');
+      if (!form) return;
+
+      var inputs = form.querySelectorAll('input');
+      for (var i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener('input', function(e) {
+          state.answers[e.target.id] = e.target.type === 'checkbox' ? e.target.checked : e.target.value;
+          updateNextButton();
+        });
+      }
+    }
+
+    function updateBackButton() {
+      var backBtn = document.getElementById('backBtn');
+      backBtn.disabled = state.currentStep === 1;
+    }
+
+    function handleNext() {
+      if (state.currentStep === 7) {
+        var btnSpinner = document.getElementById('btnSpinner');
+        var nextBtnText = document.getElementById('nextBtnText');
+        
+        btnSpinner.style.display = 'inline-block';
+        nextBtnText.style.display = 'none';
+
+        try {
+          state.estimate = window.calculateSMPPrice(state.answers);
+          state.currentStep = 8;
+          render();
+        } catch (err) {
+          showError('Failed to calculate estimate. Please try again.');
+          console.error(err);
+        } finally {
+          btnSpinner.style.display = 'none';
+          nextBtnText.style.display = 'inline';
+        }
+      } else {
+        state.currentStep++;
+        render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function handleBack() {
+      if (state.currentStep > 1) {
+        state.currentStep--;
+        render();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function showError(message) {
+      var errorDisplay = document.getElementById('errorDisplay');
+      errorDisplay.textContent = message;
+      errorDisplay.style.display = 'block';
+      setTimeout(function() { errorDisplay.style.display = 'none'; }, 5000);
+    }
+
+    document.getElementById('nextBtn').addEventListener('click', handleNext);
+    document.getElementById('backBtn').addEventListener('click', handleBack);
+
+    render();
+  </script>
+</body>
+</html>

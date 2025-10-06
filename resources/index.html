@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMP Resources & Guides | Stella's Ink Chamber</title>
+  <meta name="description" content="Browse our library of scalp micropigmentation resources covering cost, pain, aftercare, longevity, and specialized treatments in Canada.">
+  <link rel="canonical" href="https://stellasinkchamber.com/resources/">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/public/stella/styles.css">
+
+  <style>
+    .filter-controls {
+      display: flex;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .filter-button {
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--color-gray-300);
+      background: var(--color-white);
+      border-radius: 0.375rem;
+      cursor: pointer;
+      font-family: var(--font-body);
+      font-size: 0.9375rem;
+      transition: all var(--transition-fast);
+    }
+
+    .filter-button:hover {
+      border-color: var(--color-primary);
+      background: var(--color-gray-50);
+    }
+
+    .filter-button.active {
+      background: var(--color-primary);
+      color: var(--color-white);
+      border-color: var(--color-primary);
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .resource-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-gray-200);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      transition: all var(--transition-base);
+    }
+
+    .resource-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    .resource-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .resource-card p {
+      color: var(--color-gray-600);
+      font-size: 0.9375rem;
+      margin-bottom: 1rem;
+    }
+
+    .resource-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .resource-tag {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+      background: var(--color-gray-100);
+      border-radius: 0.25rem;
+      color: var(--color-gray-700);
+    }
+
+    .resource-card a {
+      color: var(--color-primary);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .resource-card a:hover {
+      text-decoration: underline;
+    }
+
+    .search-box {
+      width: 100%;
+      max-width: 500px;
+      padding: 0.875rem 1rem;
+      border: 2px solid var(--color-gray-300);
+      border-radius: 0.375rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--color-primary);
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: var(--color-gray-600);
+    }
+  </style>
+</head>
+<body>
+  <div class="sticky-cta">
+    <div class="sticky-cta-content">
+      <span class="sticky-cta-text">Questions? Book a consultation</span>
+      <a href="https://forms.gle/your-booking-form" class="btn btn-primary" data-booking-cta data-location="sticky">Free Consultation</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <nav aria-label="Breadcrumb" style="margin: 2rem 0 1rem; font-size: 0.875rem; color: var(--color-gray-600);">
+      <a href="/">Home</a> / <span>Resources</span>
+    </nav>
+
+    <h1>SMP Resources & Guides</h1>
+    <p style="font-size: 1.125rem; color: var(--color-gray-600); margin-bottom: 2rem;">Comprehensive guides to help you understand scalp micropigmentation and make informed decisions.</p>
+
+    <!-- Search -->
+    <input type="text" id="search" class="search-box" placeholder="Search resources..." aria-label="Search resources">
+
+    <!-- Filters -->
+    <div class="filter-controls">
+      <button class="filter-button active" data-filter="all">All Resources</button>
+      <button class="filter-button" data-filter="cost">Cost & Pricing</button>
+      <button class="filter-button" data-filter="procedure">Procedure Info</button>
+      <button class="filter-button" data-filter="aftercare">Aftercare</button>
+      <button class="filter-button" data-filter="specialized">Specialized</button>
+      <button class="filter-button" data-filter="comparison">Comparisons</button>
+    </div>
+
+    <!-- Resource Grid -->
+    <div class="resource-grid" id="resourceGrid">
+      <!-- Complete Guide -->
+      <article class="resource-card" data-tags="all procedure">
+        <div class="resource-tags">
+          <span class="resource-tag">Complete Guide</span>
+          <span class="resource-tag">Essential</span>
+        </div>
+        <h3>Complete SMP Canada Guide</h3>
+        <p>Comprehensive 4,500-word guide covering everything you need to know about scalp micropigmentation in Canada.</p>
+        <a href="/guides/smp-canada/" data-resource-link>Read Full Guide →</a>
+      </article>
+
+      <!-- Cost -->
+      <article class="resource-card" data-tags="all cost">
+        <div class="resource-tags">
+          <span class="resource-tag">Cost</span>
+          <span class="resource-tag">Pricing</span>
+        </div>
+        <h3>SMP Cost in Canada (2025)</h3>
+        <p>Transparent pricing guide covering what affects SMP cost, real price ranges by city, and financing options.</p>
+        <a href="/resources/cost.html" data-resource-link>Learn About Cost →</a>
+      </article>
+
+      <!-- Pain -->
+      <article class="resource-card" data-tags="all procedure">
+        <div class="resource-tags">
+          <span class="resource-tag">Procedure</span>
+          <span class="resource-tag">Comfort</span>
+        </div>
+        <h3>Does SMP Hurt?</h3>
+        <p>Honest answers about pain levels, what SMP feels like, numbing options, and comfort management.</p>
+        <a href="/resources/pain.html" data-resource-link>Pain & Comfort Guide →</a>
+      </article>
+
+      <!-- Longevity -->
+      <article class="resource-card" data-tags="all procedure">
+        <div class="resource-tags">
+          <span class="resource-tag">Longevity</span>
+          <span class="resource-tag">Maintenance</span>
+        </div>
+        <h3>How Long Does SMP Last?</h3>
+        <p>Realistic longevity expectations, fading timeline, touch-up schedules, and how to extend SMP lifespan.</p>
+        <a href="/resources/longevity.html" data-resource-link>Fading & Touch-Ups →</a>
+      </article>
+
+      <!-- Aftercare -->
+      <article class="resource-card" data-tags="all aftercare">
+        <div class="resource-tags">
+          <span class="resource-tag">Aftercare</span>
+          <span class="resource-tag">Essential</span>
+        </div>
+        <h3>SMP Aftercare Guide</h3>
+        <p>Day-by-day aftercare instructions, product recommendations, and common mistakes that can ruin results.</p>
+        <a href="/resources/aftercare.html" data-resource-link>Aftercare Timeline →</a>
+      </article>
+
+      <!-- Women -->
+      <article class="resource-card" data-tags="all specialized">
+        <div class="resource-tags">
+          <span class="resource-tag">Women</span>
+          <span class="resource-tag">Density</span>
+        </div>
+        <h3>SMP for Women</h3>
+        <p>Specialized guide covering density enhancement, hormonal considerations, and styling after SMP for women.</p>
+        <a href="/resources/women.html" data-resource-link>Women's SMP Guide →</a>
+      </article>
+
+      <!-- Alopecia -->
+      <article class="resource-card" data-tags="all specialized">
+        <div class="resource-tags">
+          <span class="resource-tag">Alopecia</span>
+          <span class="resource-tag">Medical</span>
+        </div>
+        <h3>SMP for Alopecia</h3>
+        <p>Candid information about SMP suitability for alopecia patients, expectations, and best practices.</p>
+        <a href="/resources/alopecia.html" data-resource-link>Alopecia Coverage →</a>
+      </article>
+
+      <!-- Scars -->
+      <article class="resource-card" data-tags="all specialized">
+        <div class="resource-tags">
+          <span class="resource-tag">Scars</span>
+          <span class="resource-tag">FUE/FUT</span>
+        </div>
+        <h3>Scar Camouflage with SMP</h3>
+        <p>Covering FUE/FUT hair transplant scars with SMP: blending techniques, session requirements, and results.</p>
+        <a href="/resources/scars.html" data-resource-link>Scar Coverage Guide →</a>
+      </article>
+
+      <!-- Hairline -->
+      <article class="resource-card" data-tags="all procedure">
+        <div class="resource-tags">
+          <span class="resource-tag">Design</span>
+          <span class="resource-tag">Aesthetic</span>
+        </div>
+        <h3>Choosing Your Hairline Design</h3>
+        <p>Natural vs. barbershop sharp hairlines, design factors, and creating age-appropriate, realistic results.</p>
+        <a href="/resources/hairline.html" data-resource-link>Hairline Design →</a>
+      </article>
+
+      <!-- Safety -->
+      <article class="resource-card" data-tags="all procedure">
+        <div class="resource-tags">
+          <span class="resource-tag">Safety</span>
+          <span class="resource-tag">Regulations</span>
+        </div>
+        <h3>Is SMP Safe in Canada?</h3>
+        <p>Safety protocols, hygiene standards, pigment quality, side effects, and Canadian regulations.</p>
+        <a href="/resources/safety.html" data-resource-link>Safety Guide →</a>
+      </article>
+
+      <!-- Alternatives -->
+      <article class="resource-card" data-tags="all comparison">
+        <div class="resource-tags">
+          <span class="resource-tag">Comparison</span>
+          <span class="resource-tag">Alternatives</span>
+        </div>
+        <h3>SMP vs Hair Transplant vs PRP</h3>
+        <p>Side-by-side comparison of SMP with alternatives: cost, invasiveness, results timeline, and suitability.</p>
+        <a href="/resources/alternatives.html" data-resource-link>Compare Treatments →</a>
+      </article>
+    </div>
+
+    <!-- No Results Message -->
+    <div class="no-results" id="noResults" style="display: none;">
+      <p>No resources match your search. Try different keywords or filters.</p>
+    </div>
+
+    <!-- CTA Section -->
+    <div style="background: var(--color-gray-50); padding: 2.5rem; border-radius: 0.75rem; text-align: center; margin-top: 3rem;">
+      <h2>Still Have Questions?</h2>
+      <p>Book a free consultation with Stella's Ink Chamber for personalized advice tailored to your specific needs with Stella's Ink Chamber to discuss your specific concerns and goals.</p>
+      <p style="margin-top: 1.5rem;">
+        <a href="https://forms.gle/your-booking-form" class="btn btn-primary btn-large" data-booking-cta data-location="resources-final">Book Free Consultation</a>
+        <a href="tel:+17809329541" class="btn btn-secondary btn-large">Call (780) 932-9541</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="/public/stella/app.js"></script>
+  <script>
+    // Resource Filtering & Search
+    const filterButtons = document.querySelectorAll('.filter-button');
+    const resourceCards = document.querySelectorAll('.resource-card');
+    const searchInput = document.getElementById('search');
+    const noResults = document.getElementById('noResults');
+
+    // Filter by category
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Update active button
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const filter = button.dataset.filter;
+        filterResources(filter, searchInput.value);
+      });
+    });
+
+    // Search
+    searchInput.addEventListener('input', (e) => {
+      const activeFilter = document.querySelector('.filter-button.active').dataset.filter;
+      filterResources(activeFilter, e.target.value);
+    });
+
+    function filterResources(category, searchTerm) {
+      let visibleCount = 0;
+
+      resourceCards.forEach(card => {
+        const tags = card.dataset.tags;
+        const text = card.textContent.toLowerCase();
+        const matchesCategory = category === 'all' || tags.includes(category);
+        const matchesSearch = !searchTerm || text.includes(searchTerm.toLowerCase());
+
+        if (matchesCategory && matchesSearch) {
+          card.style.display = 'block';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Show/hide no results message
+      noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+    }
+  </script>
+</body>
+</html>

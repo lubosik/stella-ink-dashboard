@@ -1,0 +1,150 @@
+/**
+ * QuoteEntryPopup Styles
+ * Site-wide popup for calculator entry
+ */
+
+.quote-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: var(--spacing-md);
+}
+
+.quote-popup-content {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-elevated);
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  animation: popupSlideIn 0.3s ease-out;
+}
+
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.quote-popup-close {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--color-gray-500);
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+}
+
+.quote-popup-close:hover {
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+}
+
+.quote-popup-close:focus {
+  outline: 3px solid rgba(61, 82, 38, 0.3);
+  outline-offset: 2px;
+}
+
+.quote-popup-body {
+  padding: var(--spacing-xl);
+  text-align: center;
+}
+
+.quote-popup-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-gray-900);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.quote-popup-lead {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-600);
+  margin: 0 0 var(--spacing-lg) 0;
+  line-height: 1.5;
+}
+
+.quote-popup-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  margin-bottom: var(--spacing-md);
+}
+
+.quote-popup-disclaimer {
+  font-size: var(--font-size-sm);
+  color: var(--color-gray-500);
+  margin: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+  .quote-popup-overlay {
+    padding: var(--spacing-sm);
+  }
+  
+  .quote-popup-content {
+    max-width: none;
+  }
+  
+  .quote-popup-body {
+    padding: var(--spacing-lg);
+  }
+  
+  .quote-popup-title {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .quote-popup-content {
+    border: 3px solid var(--color-gray-900);
+  }
+  
+  .quote-popup-close {
+    border: 2px solid currentColor;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .quote-popup-content {
+    animation: none;
+  }
+  
+  .quote-popup-close {
+    transition: none;
+  }
+}
+
+/* Focus trap styles */
+.quote-popup-overlay:focus-within {
+  outline: none;
+}
+
+.quote-popup-content:focus {
+  outline: none;
+}

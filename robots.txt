@@ -1,0 +1,42 @@
+# Stella's Ink Chamber - Robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://stellasinkchamber.com/sitemap.xml
+
+# Crawl-delay for polite crawlers
+Crawl-delay: 1
+
+# Disallow search parameter URLs to prevent duplicate content issues
+Disallow: /*?search=*
+Disallow: /*?filter=*
+
+# Allow all CSS, JS, and image files
+Allow: /public/*.css
+Allow: /public/*.js
+Allow: /public/*.jpg
+Allow: /public/*.jpeg
+Allow: /public/*.png
+Allow: /public/*.webp
+Allow: /public/*.svg
+
+# Block access to sensitive directories (if any)
+Disallow: /private/
+Disallow: /admin/
+Disallow: /.git/
+
+# User-agent specific rules
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /public/stella/
+
+# Block bad bots (optional)
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10

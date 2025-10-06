@@ -1,0 +1,15 @@
+{"timestamp":"2025-10-05T20:23:16.707Z","user":"webhook","action":"update","field":"security","oldValue":"N/A","newValue":"Invalid Calendly signature"}
+{"timestamp":"2025-10-05T20:24:10.546Z","user":"admin","action":"update","field":"valuePerBooking","oldValue":100,"newValue":100}
+{"timestamp":"2025-10-05T20:24:10.629Z","user":"admin","action":"update","field":"bookedAppointments","oldValue":0,"newValue":3}
+{"timestamp":"2025-10-05T20:24:10.709Z","user":"admin","action":"update","field":"websiteClicks","oldValue":0,"newValue":15}
+{"timestamp":"2025-10-05T20:24:10.770Z","user":"admin","action":"update","field":"estimatedRevenueForClient","oldValue":0,"newValue":0}
+{"timestamp":"2025-10-05T20:25:46.480Z","user":"admin","action":"reset","field":"all","oldValue":"Booked: 3, Clicks: 15, Est. Revenue: 0","newValue":"Booked: 0, Clicks: 0, Est. Revenue: 0","details":"Dashboard state reset to default values."}
+{"timestamp":"2025-10-05T20:25:53.539Z","user":"admin","action":"reset","field":"all","oldValue":"Booked: 0, Clicks: 0, Est. Revenue: 0","newValue":"Booked: 0, Clicks: 0, Est. Revenue: 0","details":"Dashboard state reset to default values."}
+{"timestamp":"2025-10-05T20:26:04.188Z","user":"admin","action":"update","field":"valuePerBooking","oldValue":100,"newValue":100}
+{"timestamp":"2025-10-05T20:26:04.239Z","user":"admin","action":"update","field":"estimatedRevenueForClient","oldValue":0,"newValue":0}
+{"timestamp":"2025-10-05T20:26:04.291Z","user":"admin","action":"update","field":"websiteClicks","oldValue":0,"newValue":0}
+{"timestamp":"2025-10-05T20:26:04.342Z","user":"admin","action":"update","field":"bookedAppointments","oldValue":0,"newValue":0}
+{"timestamp":"2025-10-05T20:30:12.028Z","user":"webhook","action":"update","field":"security","oldValue":"N/A","newValue":"Invalid Calendly signature"}
+{"timestamp":"2025-10-05T20:30:17.885Z","user":"webhook","action":"update","field":"security","oldValue":"N/A","newValue":"Invalid Calendly signature"}
+{"timestamp":"2025-10-05T20:34:51.332Z","user":"webhook","action":"increment","field":"bookedAppointments","oldValue":0,"newValue":1,"details":"booking_created: Test Client (test@example.com) - 2025-10-05 10:00"}
+{"timestamp":"2025-10-05T21:00:06.718Z","user":"webhook","action":"increment","field":"bookedAppointments","oldValue":1,"newValue":2,"details":"booking_created: Test Client (test@example.com) - 2025-10-05 10:00"}

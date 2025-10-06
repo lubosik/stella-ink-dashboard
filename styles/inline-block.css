@@ -1,0 +1,112 @@
+/**
+ * InlineBlock Component Styles
+ * Wrapper for embedded calculator with "Instant" badge
+ */
+
+.inline-block {
+  margin: var(--spacing-2xl) 0;
+  padding: var(--spacing-xl);
+  background: var(--color-gray-50);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-lg);
+}
+
+.inline-block--sidebar {
+  position: sticky;
+  top: var(--spacing-xl);
+  max-width: 350px;
+  padding: var(--spacing-lg);
+}
+
+.inline-block--sticky {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  background: var(--color-white);
+  border-top: 2px solid var(--color-primary);
+  box-shadow: var(--shadow-elevated);
+  margin: 0;
+  border-radius: 0;
+  padding: var(--spacing-md);
+}
+
+.inline-block__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.inline-block__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: linear-gradient(135deg, var(--color-warning) 0%, #fbbf24 100%);
+  color: var(--color-white);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+}
+
+.inline-block__badge svg {
+  width: 16px;
+  height: 16px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.1); }
+}
+
+.inline-block__title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.inline-block__lead-in {
+  font-size: var(--font-size-base);
+  color: var(--color-gray-700);
+  margin: 0 0 var(--spacing-lg) 0;
+  line-height: 1.6;
+}
+
+.inline-block__calculator {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+}
+
+.inline-block__disclaimer {
+  font-size: var(--font-size-xs);
+  color: var(--color-gray-600);
+  margin: var(--spacing-md) 0 0 0;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .inline-block--sidebar {
+    position: static;
+    max-width: 100%;
+  }
+
+  .inline-block--sticky {
+    padding: var(--spacing-sm);
+  }
+
+  .inline-block__title {
+    font-size: var(--font-size-lg);
+  }
+}

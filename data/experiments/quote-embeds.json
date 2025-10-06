@@ -1,0 +1,34 @@
+{
+  "variant": "A",
+  "cta": {
+    "A": "Get Instant Estimate",
+    "B": "See Your Price Now"
+  },
+  "popup": {
+    "trigger": "scroll60",
+    "badge": true
+  },
+  "banner": {
+    "guideBottom": true
+  },
+  "leadIn": {
+    "A": "Most clients want a ballpark now — get yours in seconds.",
+    "B": "No waiting. Get your SMP estimate instantly.",
+    "C": "See your estimate now — then book a consult for a firm quote."
+  },
+  "incentive": {
+    "enabled": true,
+    "amount": 100,
+    "currency": "CAD",
+    "text": "Complete your consultation and receive a $100 gift card toward your session.",
+    "expiry": "2025-12-31"
+  },
+  "attribution": {
+    "sources": ["guide", "resource", "gallery", "reviews", "ab_city", "popup"],
+    "anchors": ["cost", "longevity", "pricing", "vs", "safety", "scars", "women", "alopecia", "hairline"]
+  },
+  "suppression": {
+    "hours": 24,
+    "storageKey": "stella_quote_popup_suppressed"
+  }
+}

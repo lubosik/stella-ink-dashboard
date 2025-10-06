@@ -1,0 +1,78 @@
+{
+  "active_experiments": [
+    {
+      "id": "cta_text_v1",
+      "name": "Primary CTA Wording Test",
+      "status": "active",
+      "variants": [
+        {
+          "id": "control",
+          "weight": 0.34,
+          "cta_text": "Get My Estimate"
+        },
+        {
+          "id": "variant_a",
+          "weight": 0.33,
+          "cta_text": "Calculate My Price"
+        },
+        {
+          "id": "variant_b",
+          "weight": 0.33,
+          "cta_text": "See Pricing Now"
+        }
+      ]
+    },
+    {
+      "id": "incentive_v1",
+      "name": "Incentive Messaging Test",
+      "status": "active",
+      "variants": [
+        {
+          "id": "control",
+          "weight": 0.5,
+          "incentive_type": "gift_card",
+          "incentive_text": "$100 Gift Card",
+          "incentive_description": "Book your consultation this month and receive a $100 gift card toward your first session."
+        },
+        {
+          "id": "variant_a",
+          "weight": 0.5,
+          "incentive_type": "aftercare_kit",
+          "incentive_text": "Free Aftercare Kit",
+          "incentive_description": "Book this month and receive our premium aftercare kit (valued at $75) — everything you need for optimal healing."
+        }
+      ]
+    },
+    {
+      "id": "results_layout_v1",
+      "name": "Results Panel Layout Test",
+      "status": "paused",
+      "variants": [
+        {
+          "id": "control",
+          "weight": 0.5,
+          "layout": "stacked",
+          "description": "Vertical layout: estimate → session breakdown → incentive → CTA"
+        },
+        {
+          "id": "variant_a",
+          "weight": 0.5,
+          "layout": "split",
+          "description": "Two-column layout: estimate + sessions (left) | incentive + CTA (right)"
+        }
+      ]
+    }
+  ],
+  "assignment_method": "client_side",
+  "tracking": {
+    "events": [
+      "ab_variant_assigned",
+      "quote_step_view",
+      "quote_option_select",
+      "quote_contact_submit",
+      "quote_result_view",
+      "cta_book_click"
+    ],
+    "storage_key": "stella_ab_assignments"
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "source": "Local repository scan",
+  "scan_date": "2024-12-19",
+  "files_analyzed": [
+    "public/stella/styles.css",
+    "index.html",
+    "public/stella/app.js",
+    "package.json"
+  ],
+  "css_variables": {
+    "colors": {
+      "primary": "#293919",
+      "primary-light": "#3d5226", 
+      "primary-dark": "#1a2410",
+      "white": "#ffffff",
+      "black": "#000000",
+      "gray-50": "#f9fafb",
+      "gray-100": "#f3f4f6",
+      "gray-200": "#e5e7eb",
+      "gray-300": "#d1d5db",
+      "gray-600": "#4b5563",
+      "gray-800": "#1f2937",
+      "gray-900": "#111827"
+    },
+    "typography": {
+      "font-body": "'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+      "font-heading": "'Libre Baskerville', Georgia, serif"
+    },
+    "spacing": {
+      "xs": "0.25rem",
+      "sm": "0.5rem", 
+      "md": "1rem",
+      "lg": "1.5rem",
+      "xl": "2rem",
+      "2xl": "3rem",
+      "3xl": "4rem"
+    },
+    "layout": {
+      "container-max": "1280px",
+      "content-max": "65ch",
+      "sidebar-width": "280px"
+    },
+    "transitions": {
+      "fast": "150ms ease-in-out",
+      "base": "250ms ease-in-out"
+    }
+  },
+  "component_styles": {
+    "buttons": {
+      "base": {
+        "padding": "0.875rem 1.75rem",
+        "font-family": "var(--font-body)",
+        "font-size": "1rem",
+        "font-weight": "600",
+        "border": "2px solid transparent",
+        "border-radius": "0.375rem",
+        "transition": "all var(--transition-base)"
+      },
+      "primary": {
+        "background": "var(--color-primary)",
+        "color": "var(--color-white)",
+        "border-color": "var(--color-primary)",
+        "hover": {
+          "background": "var(--color-primary-light)",
+          "border-color": "var(--color-primary-light)",
+          "transform": "translateY(-2px)",
+          "box-shadow": "0 4px 12px rgba(41, 57, 25, 0.25)"
+        }
+      },
+      "secondary": {
+        "background": "transparent",
+        "color": "var(--color-primary)",
+        "border-color": "var(--color-primary)",
+        "hover": {
+          "background": "var(--color-primary)",
+          "color": "var(--color-white)"
+        }
+      },
+      "large": {
+        "padding": "1.125rem 2.25rem",
+        "font-size": "1.125rem"
+      }
+    },
+    "cards": {
+      "callout": {
+        "background": "var(--color-gray-50)",
+        "border-left": "4px solid var(--color-primary)",
+        "padding": "var(--spacing-lg)",
+        "border-radius": "0.375rem"
+      },
+      "review": {
+        "background": "var(--color-white)",
+        "padding": "var(--spacing-lg)",
+        "border-radius": "0.5rem",
+        "box-shadow": "0 1px 3px rgba(0, 0, 0, 0.1)"
+      },
+      "why-stella": {
+        "background": "var(--color-gray-50)",
+        "border": "2px solid var(--color-primary)",
+        "border-radius": "0.75rem",
+        "padding": "var(--spacing-xl)"
+      }
+    },
+    "forms": {
+      "input": {
+        "padding": "0.875rem 1rem",
+        "border": "2px solid var(--color-white)",
+        "border-radius": "0.375rem",
+        "font-size": "1rem",
+        "font-family": "var(--font-body)"
+      },
+      "focus": {
+        "outline": "none",
+        "border-color": "var(--color-primary-light)"
+      }
+    }
+  },
+  "typography_scale": {
+    "h1": {
+      "font-size": "clamp(2rem, 5vw, 3rem)",
+      "margin-bottom": "var(--spacing-lg)"
+    },
+    "h2": {
+      "font-size": "clamp(1.75rem, 4vw, 2.25rem)",
+      "margin-top": "var(--spacing-2xl)"
+    },
+    "h3": {
+      "font-size": "clamp(1.5rem, 3vw, 1.875rem)",
+      "margin-top": "var(--spacing-xl)"
+    },
+    "h4": {
+      "font-size": "1.25rem",
+      "margin-top": "var(--spacing-lg)"
+    },
+    "body": {
+      "font-size": "16px",
+      "line-height": "1.6"
+    }
+  },
+  "border_radius": {
+    "sm": "0.25rem",
+    "md": "0.375rem", 
+    "lg": "0.5rem",
+    "xl": "0.75rem",
+    "pill": "9999px"
+  },
+  "box_shadows": {
+    "card": "0 1px 3px rgba(0, 0, 0, 0.1)",
+    "elevated": "0 4px 12px rgba(41, 57, 25, 0.25)",
+    "sticky": "0 -4px 12px rgba(0, 0, 0, 0.1)",
+    "mobile-toggle": "0 4px 12px rgba(0, 0, 0, 0.15)"
+  },
+  "z_index": {
+    "sticky": "900",
+    "mobile-toggle": "800",
+    "mobile-sheet": "950"
+  },
+  "responsive_breakpoints": {
+    "mobile": "768px",
+    "desktop": "1024px"
+  },
+  "accessibility": {
+    "focus_outline": "none (custom focus styles)",
+    "sr_only": "position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0;"
+  },
+  "animation_transitions": {
+    "fast": "150ms ease-in-out",
+    "base": "250ms ease-in-out",
+    "transform": "translateY(-2px) on hover",
+    "scale": "scale(1.05) on hover"
+  }
+}

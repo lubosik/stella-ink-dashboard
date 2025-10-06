@@ -1,0 +1,59 @@
+{
+  "event": "invitee.canceled",
+  "payload": {
+    "invitee": {
+      "email": "client@example.com",
+      "name": "John Doe",
+      "uuid": "AAAAAAAAAAAAAAAA",
+      "timezone": "America/New_York",
+      "created_at": "2024-01-15T10:30:00.000000Z",
+      "updated_at": "2024-01-15T10:35:00.000000Z",
+      "canceled": true,
+      "canceler_name": "John Doe",
+      "cancel_reason": "Schedule conflict",
+      "cancellation": {
+        "canceled_by": "invitee",
+        "reason": "Schedule conflict",
+        "canceler_type": "invitee"
+      }
+    },
+    "event_type": {
+      "name": "Consultation Call",
+      "uuid": "BBBBBBBBBBBBBBBB",
+      "kind": "One-on-One",
+      "slug": "consultation-call",
+      "duration": 30,
+      "owner": {
+        "type": "User",
+        "uuid": "CCCCCCCCCCCCCCCC"
+      }
+    },
+    "event": {
+      "uuid": "DDDDDDDDDDDDDDDD",
+      "assigned_to": [
+        {
+          "name": "Stella",
+          "email": "stella@stellasinkchamber.com",
+          "primary": true
+        }
+      ],
+      "start_time": "2024-01-20T14:00:00.000000Z",
+      "end_time": "2024-01-20T14:30:00.000000Z",
+      "location": {
+        "type": "physical",
+        "location": "Stella's Ink Chamber Studio"
+      },
+      "status": "canceled"
+    },
+    "questions_and_answers": [
+      {
+        "question": "What type of tattoo are you interested in?",
+        "answer": "I'm looking for a custom design for my forearm"
+      },
+      {
+        "question": "Do you have any reference images?",
+        "answer": "Yes, I have some ideas I'd like to discuss"
+      }
+    ]
+  }
+}

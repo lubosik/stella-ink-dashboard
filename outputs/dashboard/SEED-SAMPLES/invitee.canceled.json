@@ -1,0 +1,115 @@
+{
+  "event": "invitee.canceled",
+  "time": "2024-01-15T10:30:00.000Z",
+  "payload": {
+    "event_type": {
+      "uuid": "AAAAAAAAAAAAAAAA",
+      "kind": "One-on-One",
+      "slug": "one-on-one",
+      "name": "One-on-One",
+      "duration": 30,
+      "owner": {
+        "type": "users",
+        "uuid": "AAAAAAAAAAAAAAAA"
+      }
+    },
+    "event": {
+      "uuid": "AAAAAAAAAAAAAAAA",
+      "assigned_to": ["user@example.com"],
+      "extended_assigned_to": [
+        {
+          "email": "user@example.com",
+          "name": "User Name"
+        }
+      ],
+      "start_time": "2024-01-15T10:30:00.000Z",
+      "start_time_pretty": "10:30am - Monday, January 15, 2024",
+      "end_time": "2024-01-15T11:00:00.000Z",
+      "end_time_pretty": "11:00am - Monday, January 15, 2024",
+      "event_type": "One-on-One",
+      "location": null,
+      "canceled": true,
+      "canceler_name": "John Doe",
+      "cancel_reason": "Schedule conflict",
+      "created_at": "2024-01-15T10:00:00.000Z",
+      "updated_at": "2024-01-15T10:30:00.000Z"
+    },
+    "invitee": {
+      "uuid": "AAAAAAAAAAAAAAAA",
+      "first_name": "John",
+      "last_name": "Doe",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "text_reminder_number": null,
+      "timezone": "America/New_York",
+      "created_at": "2024-01-15T10:00:00.000Z",
+      "updated_at": "2024-01-15T10:30:00.000Z",
+      "canceled": true,
+      "canceler_name": "John Doe",
+      "cancel_reason": "Schedule conflict",
+      "cancelled_at": "2024-01-15T10:30:00.000Z"
+    },
+    "questions_and_answers": [
+      {
+        "question": "What's your tattoo idea?",
+        "answer": "I want a small rose on my wrist"
+      },
+      {
+        "question": "Do you have any allergies?",
+        "answer": "No known allergies"
+      }
+    ],
+    "questions_and_responses": {
+      "1_question": "What's your tattoo idea?",
+      "1_answer": "I want a small rose on my wrist",
+      "2_question": "Do you have any allergies?",
+      "2_answer": "No known allergies"
+    },
+    "tracking": {
+      "utm_campaign": null,
+      "utm_source": null,
+      "utm_medium": null,
+      "utm_content": null,
+      "utm_term": null,
+      "salesforce_uuid": null
+    },
+    "old_invitee": {
+      "uuid": "AAAAAAAAAAAAAAAA",
+      "first_name": "John",
+      "last_name": "Doe",
+      "name": "John Doe",
+      "email": "john.doe@example.com",
+      "text_reminder_number": null,
+      "timezone": "America/New_York",
+      "created_at": "2024-01-15T10:00:00.000Z",
+      "updated_at": "2024-01-15T10:00:00.000Z",
+      "canceled": false,
+      "canceler_name": null,
+      "cancel_reason": null,
+      "cancelled_at": null
+    },
+    "old_event": {
+      "uuid": "AAAAAAAAAAAAAAAA",
+      "assigned_to": ["user@example.com"],
+      "extended_assigned_to": [
+        {
+          "email": "user@example.com",
+          "name": "User Name"
+        }
+      ],
+      "start_time": "2024-01-15T10:30:00.000Z",
+      "start_time_pretty": "10:30am - Monday, January 15, 2024",
+      "end_time": "2024-01-15T11:00:00.000Z",
+      "end_time_pretty": "11:00am - Monday, January 15, 2024",
+      "event_type": "One-on-One",
+      "location": null,
+      "canceled": false,
+      "canceler_name": null,
+      "cancel_reason": null,
+      "created_at": "2024-01-15T10:00:00.000Z",
+      "updated_at": "2024-01-15T10:00:00.000Z"
+    },
+    "new_invitee": null,
+    "new_event": null
+  }
+}
