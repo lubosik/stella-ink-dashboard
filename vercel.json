@@ -7,5 +7,8 @@
     "DASHBOARD_API_KEY": "QjLA4c46CL879xQ5WhUrgli3e2ZphQVA",
     "VALUE_PER_BOOKING": "100",
     "NODE_ENV": "production"
+  },
+  "github": {
+    "enabled": false
   }
 }
