@@ -206,6 +206,8 @@ class PersistentMemoryStore implements Store {
       websiteClicks: newWebsiteClicks,
       revenueAutopilot: newBookedAppointments * state.valuePerBooking,
       bookingRate: newWebsiteClicks > 0 ? (newBookedAppointments / newWebsiteClicks) * 100 : 0,
+      // Preserve manually set estimatedRevenueForClient - don't overwrite it
+      estimatedRevenueForClient: state.estimatedRevenueForClient,
       updatedAt: new Date().toISOString(),
     };
   }
