@@ -7,7 +7,7 @@ The Dashboard Booking API allows external systems to send booking data directly 
 ## Base URL
 
 ```
-https://yourdomain.com/api/bookings
+https://stella-ink-dashboard-ynns.vercel.app/api/bookings
 ```
 
 ## Authentication
@@ -16,12 +16,12 @@ The API uses a simple API key authentication system:
 
 ### Method 1: Header Authentication (Recommended)
 ```http
-X-API-Key: dashboard-api-key-2024
+X-API-Key: QjLA4c46CL879xQ5WhUrgli3e2ZphQVA
 ```
 
 ### Method 2: Query Parameter Authentication
 ```
-https://yourdomain.com/api/bookings?api_key=dashboard-api-key-2024
+https://stella-ink-dashboard-ynns.vercel.app/api/bookings?api_key=QjLA4c46CL879xQ5WhUrgli3e2ZphQVA
 ```
 
 ## Endpoints
@@ -33,7 +33,7 @@ Creates or cancels a booking and updates the dashboard metrics.
 #### Request Headers
 ```http
 Content-Type: application/json
-X-API-Key: dashboard-api-key-2024
+X-API-Key: QjLA4c46CL879xQ5WhUrgli3e2ZphQVA
 ```
 
 #### Request Body Schema

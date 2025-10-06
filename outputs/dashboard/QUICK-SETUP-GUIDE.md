@@ -1,5 +1,18 @@
 # Stella's Ink Chamber Dashboard - Quick Setup Guide
 
+## 🌐 Production Dashboard (Deployed)
+
+**Dashboard:** https://stella-ink-dashboard-ynns.vercel.app/dashboard  
+**Admin Panel:** https://stella-ink-dashboard-ynns.vercel.app/admin  
+**API Endpoint:** https://stella-ink-dashboard-ynns.vercel.app/api/bookings
+
+### Production API Key
+```
+QjLA4c46CL879xQ5WhUrgli3e2ZphQVA
+```
+
+---
+
 ## 🚀 Quick Start (5 Minutes)
 
 ### Step 1: Start the Dashboard
