@@ -186,10 +186,74 @@ const eventBus = new EventEmitter();
 export const fileStore = new FileStore(eventBus);
 export const memoryStore = new MemoryStore(eventBus); // For testing
 
+// Global state for serverless environment - persists across requests in same deployment
+let globalState: DashboardState | null = null;
+
+class PersistentMemoryStore implements Store {
+  private eventBus: EventEmitter;
+
+  constructor(eventBus: EventEmitter) {
+    this.eventBus = eventBus;
+  }
+
+  recomputeDerived(state: DashboardState): DashboardState {
+    const newBookedAppointments = Math.max(0, state.bookedAppointments);
+    const newWebsiteClicks = Math.max(0, state.websiteClicks);
+
+    return {
+      ...state,
+      bookedAppointments: newBookedAppointments,
+      websiteClicks: newWebsiteClicks,
+      revenueAutopilot: newBookedAppointments * state.valuePerBooking,
+      bookingRate: newWebsiteClicks > 0 ? (newBookedAppointments / newWebsiteClicks) * 100 : 0,
+      updatedAt: new Date().toISOString(),
+    };
+  }
+
+  async read(): Promise<DashboardState> {
+    if (!globalState) {
+      globalState = {
+        bookedAppointments: 0,
+        valuePerBooking: 100,
+        revenueAutopilot: 0,
+        websiteClicks: 0,
+        estimatedRevenueForClient: 0,
+        bookingRate: 0,
+        updatedAt: new Date().toISOString(),
+      };
+    }
+    return this.recomputeDerived(globalState);
+  }
+
+  async write(state: DashboardState): Promise<void> {
+    globalState = this.recomputeDerived(state);
+    this.eventBus.emit('state:update', globalState);
+  }
+
+  async incrementBooked(by: number = 1): Promise<DashboardState> {
+    const currentState = await this.read();
+    currentState.bookedAppointments += by;
+    await this.write(currentState);
+    return currentState;
+  }
+
+  async decrementBooked(by: number = 1): Promise<DashboardState> {
+    const currentState = await this.read();
+    currentState.bookedAppointments = Math.max(0, currentState.bookedAppointments - by);
+    await this.write(currentState);
+    return currentState;
+  }
+
+  async lock(): Promise<void> { /* no-op */ }
+  async unlock(): Promise<void> { /* no-op */ }
+}
+
+export const persistentMemoryStore = new PersistentMemoryStore(eventBus);
+
 export const getStore = (): Store => {
-  // Use MemoryStore in production (Vercel) since filesystem is read-only
+  // Use PersistentMemoryStore in production (Vercel) since filesystem is read-only
   if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
-    return memoryStore;
+    return persistentMemoryStore;
   }
   return fileStore;
 };
