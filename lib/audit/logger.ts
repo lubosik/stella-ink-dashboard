@@ -3,8 +3,8 @@ import path from 'path';
 
 export type AuditEntry = {
   timestamp: string;
-  user: 'admin' | 'webhook';
-  action: 'update' | 'increment' | 'decrement' | 'reset';
+  user: 'admin' | 'webhook' | 'api';
+  action: 'update' | 'increment' | 'decrement' | 'reset' | 'error' | 'security';
   field: string;
   oldValue: number | string;
   newValue: number | string;
@@ -13,8 +13,25 @@ export type AuditEntry = {
 
 const AUDIT_LOG_PATH = path.join(process.cwd(), 'outputs', 'dashboard', 'audit.log');
 
+// In-memory audit log for production (Vercel)
+let memoryAuditLog: AuditEntry[] = [];
+
 export async function logAudit(entry: AuditEntry): Promise<void> {
   try {
+    // In production (Vercel), use memory storage
+    if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
+      memoryAuditLog.unshift(entry); // Add to beginning (newest first)
+      
+      // Keep only last 1000 entries to prevent memory issues
+      if (memoryAuditLog.length > 1000) {
+        memoryAuditLog = memoryAuditLog.slice(0, 1000);
+      }
+      
+      console.log(`Audit logged: ${entry.user} ${entry.action} ${entry.field} (${entry.oldValue} → ${entry.newValue})`);
+      return;
+    }
+
+    // In development, use file storage
     // Ensure the directory exists
     await fs.mkdir(path.dirname(AUDIT_LOG_PATH), { recursive: true });
     
@@ -31,6 +48,12 @@ export async function logAudit(entry: AuditEntry): Promise<void> {
 
 export async function readAuditLog(limit?: number): Promise<AuditEntry[]> {
   try {
+    // In production (Vercel), use memory storage
+    if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
+      return limit ? memoryAuditLog.slice(0, limit) : memoryAuditLog;
+    }
+
+    // In development, use file storage
     const content = await fs.readFile(AUDIT_LOG_PATH, 'utf-8');
     const lines = content.trim().split('\n').filter(line => line.trim());
     
@@ -59,8 +82,16 @@ export async function readAuditLog(limit?: number): Promise<AuditEntry[]> {
 
 export async function clearAuditLog(): Promise<void> {
   try {
+    // In production (Vercel), clear memory storage
+    if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
+      memoryAuditLog = [];
+      console.log('Audit log cleared (memory)');
+      return;
+    }
+
+    // In development, clear file storage
     await fs.writeFile(AUDIT_LOG_PATH, '', 'utf-8');
-    console.log('Audit log cleared');
+    console.log('Audit log cleared (file)');
   } catch (error) {
     console.error('Failed to clear audit log:', error);
     throw error;
