@@ -80,7 +80,7 @@ export async function POST(req: NextRequest) {
         details: 'Unauthorized booking API access attempt'
       });
       
-      AnalyticsEvents.webhookReceived('unauthorized', 'failure', 'Invalid API key');
+      AnalyticsEvents.webhookReceived('unauthorized', 'failure');
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
@@ -99,7 +99,7 @@ export async function POST(req: NextRequest) {
         details: 'Failed to validate booking data structure'
       });
 
-      AnalyticsEvents.webhookReceived('invalid_data', 'failure', 'Invalid booking data structure');
+      AnalyticsEvents.webhookReceived('invalid_data', 'failure');
       return NextResponse.json({ 
         error: 'Invalid booking data. Required fields: event, bookingId, clientName, clientEmail, appointmentDate, appointmentTime' 
       }, { status: 400 });
@@ -159,7 +159,7 @@ export async function POST(req: NextRequest) {
       details: `Booking API error: ${error instanceof Error ? error.message : 'Unknown error'}`
     });
 
-    AnalyticsEvents.webhookReceived('error', 'failure', error instanceof Error ? error.message : 'Unknown error');
+    AnalyticsEvents.webhookReceived('error', 'failure');
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
