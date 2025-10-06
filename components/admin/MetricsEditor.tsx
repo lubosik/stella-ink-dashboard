@@ -19,23 +19,40 @@ export function MetricsEditor({
   onReset 
 }: MetricsEditorProps) {
   const [isLoading, setIsLoading] = React.useState(false);
+  const [formData, setFormData] = React.useState({
+    websiteClicks: state.websiteClicks,
+    valuePerBooking: state.valuePerBooking,
+    estimatedRevenueForClient: state.estimatedRevenueForClient,
+    bookedAppointments: state.bookedAppointments,
+  });
+
+  // Update form data when state changes
+  React.useEffect(() => {
+    setFormData({
+      websiteClicks: state.websiteClicks,
+      valuePerBooking: state.valuePerBooking,
+      estimatedRevenueForClient: state.estimatedRevenueForClient,
+      bookedAppointments: state.bookedAppointments,
+    });
+  }, [state]);
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: parseInt(value) || 0
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     
     try {
-      const formData = new FormData(e.currentTarget);
-      const websiteClicks = parseInt(formData.get('websiteClicks') as string);
-      const valuePerBooking = parseInt(formData.get('valuePerBooking') as string);
-      const estimatedRevenueForClient = parseInt(formData.get('estimatedRevenueForClient') as string);
-      const bookedAppointments = parseInt(formData.get('bookedAppointments') as string);
-
       await Promise.all([
-        onUpdate('websiteClicks', websiteClicks),
-        onUpdate('valuePerBooking', valuePerBooking),
-        onUpdate('estimatedRevenueForClient', estimatedRevenueForClient),
-        onUpdate('bookedAppointments', bookedAppointments),
+        onUpdate('websiteClicks', formData.websiteClicks),
+        onUpdate('valuePerBooking', formData.valuePerBooking),
+        onUpdate('estimatedRevenueForClient', formData.estimatedRevenueForClient),
+        onUpdate('bookedAppointments', formData.bookedAppointments),
       ]);
     } catch (error) {
       console.error('Failed to update metrics:', error);
@@ -58,7 +75,8 @@ export function MetricsEditor({
               type="number"
               id="websiteClicks"
               name="websiteClicks"
-              defaultValue={state.websiteClicks}
+              value={formData.websiteClicks}
+              onChange={(e) => handleInputChange('websiteClicks', e.target.value)}
               min="0"
               className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               required
@@ -73,7 +91,8 @@ export function MetricsEditor({
               type="number"
               id="valuePerBooking"
               name="valuePerBooking"
-              defaultValue={state.valuePerBooking}
+              value={formData.valuePerBooking}
+              onChange={(e) => handleInputChange('valuePerBooking', e.target.value)}
               min="0"
               className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               required
@@ -88,7 +107,8 @@ export function MetricsEditor({
               type="number"
               id="estimatedRevenueForClient"
               name="estimatedRevenueForClient"
-              defaultValue={state.estimatedRevenueForClient}
+              value={formData.estimatedRevenueForClient}
+              onChange={(e) => handleInputChange('estimatedRevenueForClient', e.target.value)}
               min="0"
               className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               required
@@ -103,7 +123,8 @@ export function MetricsEditor({
               type="number"
               id="bookedAppointments"
               name="bookedAppointments"
-              defaultValue={state.bookedAppointments}
+              value={formData.bookedAppointments}
+              onChange={(e) => handleInputChange('bookedAppointments', e.target.value)}
               min="0"
               className="w-full px-3 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               required

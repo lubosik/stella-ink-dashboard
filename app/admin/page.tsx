@@ -9,6 +9,7 @@ import { AuditLog } from '@/components/admin/AuditLog';
 import { AuditEntry } from '@/lib/audit/logger';
 import { BrandButton } from '@/components/brand/BrandButton';
 import { Section } from '@/components/brand/Section';
+import Link from 'next/link';
 
 const AdminPage: React.FC = () => {
   const [dashboardState, setDashboardState] = useState<DashboardState | null>(null);
@@ -60,6 +61,25 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const refreshState = async () => {
+    try {
+      const [stateRes, auditRes] = await Promise.all([
+        fetch('/api/state'),
+        fetch('/api/admin/audit-log')
+      ]);
+      
+      if (stateRes.ok) {
+        setDashboardState(await stateRes.json());
+      }
+      
+      if (auditRes.ok) {
+        setAuditLog((await auditRes.json()).slice(-10));
+      }
+    } catch (error) {
+      console.error('Failed to refresh state:', error);
+    }
+  };
+
   const handleUpdateMetric = async (field: keyof DashboardState, value: number) => {
     try {
       const res = await fetch('/api/admin/update', {
@@ -106,7 +126,7 @@ const AdminPage: React.FC = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': 'dashboard-api-key-2024'
+          'X-API-Key': 'QjLA4c46CL879xQ5WhUrgli3e2ZphQVA'
         },
         body: JSON.stringify(testBookingData),
       });
@@ -116,12 +136,7 @@ const AdminPage: React.FC = () => {
         alert(`Test booking created successfully!\nClient: ${result.clientName}\nBooking ID: ${result.bookingId}`);
         
         // Re-fetch state and audit log
-        const stateRes = await fetch('/api/state');
-        const auditRes = await fetch('/api/admin/audit-log');
-        if (stateRes.ok && auditRes.ok) {
-          setDashboardState(await stateRes.json());
-          setAuditLog((await auditRes.json()).slice(-10));
-        }
+        await refreshState();
         AnalyticsEvents.adminTestWebhook('success');
       } else {
         const errorData = await res.json();
@@ -161,12 +176,7 @@ const AdminPage: React.FC = () => {
         method: 'POST',
       });
       if (res.ok) {
-        const data = await res.json();
-        setDashboardState(data.state);
-        const auditRes = await fetch('/api/admin/audit-log');
-        if (auditRes.ok) {
-          setAuditLog((await auditRes.json()).slice(-10));
-        }
+        await refreshState();
         alert('Dashboard state reset to zero!');
         AnalyticsEvents.adminReset('success');
       } else {
@@ -189,12 +199,7 @@ const AdminPage: React.FC = () => {
         method: 'POST',
       });
       if (res.ok) {
-        const data = await res.json();
-        setDashboardState(data.state);
-        const auditRes = await fetch('/api/admin/audit-log');
-        if (auditRes.ok) {
-          setAuditLog((await auditRes.json()).slice(-10));
-        }
+        await refreshState();
         alert('Dashboard state reset to zero!');
         AnalyticsEvents.adminReset('success');
       } else {
@@ -211,26 +216,7 @@ const AdminPage: React.FC = () => {
   // Fetch initial data when authenticated
   useEffect(() => {
     if (isAuthenticated) {
-      const fetchData = async () => {
-        try {
-          const [stateRes, auditRes] = await Promise.all([
-            fetch('/api/state'),
-            fetch('/api/admin/audit-log')
-          ]);
-          
-          if (stateRes.ok) {
-            setDashboardState(await stateRes.json());
-          }
-          
-          if (auditRes.ok) {
-            setAuditLog((await auditRes.json()).slice(-10));
-          }
-        } catch (error) {
-          console.error('Failed to fetch initial data:', error);
-        }
-      };
-      
-      fetchData();
+      refreshState();
     }
   }, [isAuthenticated]);
 
@@ -291,7 +277,14 @@ const AdminPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-neutral-50 font-body text-neutral-900">
       <Section className="py-xl">
-        <h1 className="text-4xl font-heading text-neutral-900 mb-xl">Admin Panel</h1>
+        <div className="flex items-center justify-between mb-xl">
+          <h1 className="text-4xl font-heading text-neutral-900">Admin Panel</h1>
+          <Link href="/dashboard">
+            <BrandButton variant="secondary" size="md">
+              ← Back to Dashboard
+            </BrandButton>
+          </Link>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-lg">
           <BrandCard variant="elevated">
