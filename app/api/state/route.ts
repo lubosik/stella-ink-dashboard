@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fileStore } from '@/lib/state/store';
+import { getStore } from '@/lib/state/store';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(request: NextRequest) {
   try {
-    const state = await fileStore.read();
+    const store = getStore();
+    const state = await store.read();
     
     return NextResponse.json(state, {
       status: 200,

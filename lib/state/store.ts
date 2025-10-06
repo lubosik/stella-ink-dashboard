@@ -187,7 +187,10 @@ export const fileStore = new FileStore(eventBus);
 export const memoryStore = new MemoryStore(eventBus); // For testing
 
 export const getStore = (): Store => {
-  // In a real app, you might switch based on NODE_ENV or a config flag
+  // Use MemoryStore in production (Vercel) since filesystem is read-only
+  if (process.env.NODE_ENV === 'production' || process.env.VERCEL) {
+    return memoryStore;
+  }
   return fileStore;
 };
 

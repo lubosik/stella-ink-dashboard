@@ -1,11 +1,11 @@
 import { NextRequest } from 'next/server';
-import { getEventBus, fileStore, DashboardState } from '@/lib/state/store';
+import { getEventBus, getStore, DashboardState } from '@/lib/state/store';
 
 export const dynamic = 'force-dynamic';
 
 export async function GET(req: NextRequest) {
   const eventBus = getEventBus();
-  const store = fileStore;
+  const store = getStore();
 
   const encoder = new TextEncoder();
   const readable = new ReadableStream({

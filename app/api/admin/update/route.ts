@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fileStore, DashboardState } from '@/lib/state/store';
+import { getStore, DashboardState } from '@/lib/state/store';
 import { logAudit } from '@/lib/audit/logger';
 import { authAdmin } from '@/lib/auth';
 
@@ -19,7 +19,7 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: authResult.error }, { status: authResult.status });
   }
 
-  const store = fileStore;
+  const store = getStore();
   await store.lock();
   try {
     const { field, value } = await req.json();

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { fileStore } from '@/lib/state/store';
+import { getStore } from '@/lib/state/store';
 import { logAudit } from '@/lib/audit/logger';
 import { AnalyticsEvents } from '@/lib/analytics';
 
@@ -106,18 +106,19 @@ export async function POST(req: NextRequest) {
     }
 
     // Get current state
-    const currentState = await fileStore.read();
+    const store = getStore();
+    const currentState = await store.read();
     const oldBookedAppointments = currentState.bookedAppointments;
 
     // Update the dashboard based on the event
     if (bookingData.event === 'booking_created') {
-      await fileStore.incrementBooked(1);
+      await store.incrementBooked(1);
     } else if (bookingData.event === 'booking_canceled') {
-      await fileStore.decrementBooked(1);
+      await store.decrementBooked(1);
     }
 
     // Get updated state
-    const updatedState = await fileStore.read();
+    const updatedState = await store.read();
 
     // Log the audit entry
     await logAudit({
